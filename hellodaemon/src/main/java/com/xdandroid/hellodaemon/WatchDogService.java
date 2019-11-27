@@ -35,9 +35,11 @@ public class WatchDogService extends Service {
         if (sDisposable != null && !sDisposable.isDisposed()) return START_STICKY;
 
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N) {
-            startForeground(HASH_CODE, new Notification());
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
                 DaemonEnv.startServiceSafely(new Intent(DaemonEnv.sApp, WatchDogNotificationService.class));
+            } else {
+                startForeground(HASH_CODE, new Notification());
+            }
         }
 
         //定时检查 AbsWorkService 是否在运行，如果不在运行就把它拉起来
@@ -46,7 +48,9 @@ public class WatchDogService extends Service {
             JobInfo.Builder builder = new JobInfo.Builder(HASH_CODE, new ComponentName(DaemonEnv.sApp, JobSchedulerService.class));
             builder.setPeriodic(DaemonEnv.getWakeUpInterval());
             //Android 7.0+ 增加了一项针对 JobScheduler 的新限制，最小间隔只能是下面设定的数字
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) builder.setPeriodic(JobInfo.getMinPeriodMillis(), JobInfo.getMinFlexMillis());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                builder.setPeriodic(JobInfo.getMinPeriodMillis(), JobInfo.getMinFlexMillis());
+            }
             builder.setPersisted(true);
             JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
             scheduler.schedule(builder.build());
@@ -115,7 +119,7 @@ public class WatchDogService extends Service {
 
     /**
      * 用于在不需要服务运行的时候取消 Job / Alarm / Subscription.
-     *
+     * <p>
      * 因 WatchDogService 运行在 :watch 子进程, 请勿在主进程中直接调用此方法.
      * 而是向 WakeUpReceiver 发送一个 Action 为 WakeUpReceiver.ACTION_CANCEL_JOB_ALARM_SUB 的广播.
      */

@@ -55,18 +55,18 @@ public abstract class AbsWorkService extends Service {
 
         if (mFirstStarted) {
             mFirstStarted = false;
-            //启动前台服务而不显示通知的漏洞已在 API Level 25 修复，大快人心！
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                    //利用漏洞在 API Level 18 及以上的 Android 系统中，启动前台服务而不显示通知
-                    DaemonEnv.startServiceSafely(new Intent(getApplication(), WorkNotificationService.class));
-                } else {
-                    //利用漏洞在 API Level 17 及以下的 Android 系统中，启动前台服务而不显示通知
-                    startForeground(HASH_CODE, new Notification());
-                }
-            }
-            getPackageManager().setComponentEnabledSetting(new ComponentName(getPackageName(), WatchDogService.class.getName()),
-                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+//            //启动前台服务而不显示通知的漏洞已在 API Level 25 修复，大快人心！
+//            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N) {
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+//                    //利用漏洞在 API Level 18 及以上的 Android 系统中，启动前台服务而不显示通知
+//                    DaemonEnv.startServiceSafely(new Intent(getApplication(), WorkNotificationService.class));
+//                } else {
+//                    //利用漏洞在 API Level 17 及以下的 Android 系统中，启动前台服务而不显示通知
+//                    startForeground(HASH_CODE, new Notification());
+//                }
+//            }
+//            getPackageManager().setComponentEnabledSetting(new ComponentName(getPackageName(), WatchDogService.class.getName()),
+//                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
         }
 
         return START_STICKY;

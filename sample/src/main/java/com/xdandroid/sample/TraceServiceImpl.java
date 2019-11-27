@@ -25,6 +25,13 @@ public class TraceServiceImpl extends AbsWorkService {
         cancelJobAlarmSub();
     }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        System.out.println("onStartCommand。。");
+
+        return super.onStartCommand(intent, flags, startId);
+    }
+
     /**
      * 是否 任务完成, 不再需要服务运行?
      * @return 应当停止服务, true; 应当启动服务, false; 无法判断, 什么也不做, null.
@@ -36,12 +43,12 @@ public class TraceServiceImpl extends AbsWorkService {
 
     @Override
     public void startWork(Intent intent, int flags, int startId) {
-        System.out.println("检查磁盘中是否有上次销毁时保存的数据");
+        System.out.println("检查磁盘中是否有上次销毁时保存的数据。。");
         sDisposable = Observable
                 .interval(3, TimeUnit.SECONDS)
                 //取消任务时取消定时唤醒
                 .doOnDispose(() -> {
-                    System.out.println("保存数据到磁盘。");
+                    System.out.println("保存数据到磁盘。。");
                     cancelJobAlarmSub();
                 })
                 .subscribe(count -> {
@@ -72,6 +79,6 @@ public class TraceServiceImpl extends AbsWorkService {
 
     @Override
     public void onServiceKilled(Intent rootIntent) {
-        System.out.println("保存数据到磁盘。");
+        System.out.println("保存数据到磁盘。。");
     }
 }

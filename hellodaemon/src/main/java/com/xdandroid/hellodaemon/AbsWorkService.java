@@ -141,7 +141,7 @@ public abstract class AbsWorkService extends Service {
         @Override
         public int onStartCommand(Intent intent, int flags, int startId) {
 //            startForeground(AbsWorkService.HASH_CODE, new Notification());
-            stopSelf();
+//            stopSelf();
             return START_STICKY;
         }
 

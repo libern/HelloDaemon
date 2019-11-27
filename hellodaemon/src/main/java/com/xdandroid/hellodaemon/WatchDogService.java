@@ -144,7 +144,7 @@ public class WatchDogService extends Service {
         @Override
         public int onStartCommand(Intent intent, int flags, int startId) {
 //            startForeground(WatchDogService.HASH_CODE, new Notification());
-            stopSelf();
+//            stopSelf();
             return START_STICKY;
         }
 

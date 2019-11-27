@@ -62,7 +62,7 @@ public abstract class AbsWorkService extends Service {
                     DaemonEnv.startServiceSafely(new Intent(getApplication(), WorkNotificationService.class));
                 } else {
                     //利用漏洞在 API Level 17 及以下的 Android 系统中，启动前台服务而不显示通知
-                    startForeground(HASH_CODE, new Notification());
+//                    startForeground(HASH_CODE, new Notification());
                 }
             }
             getPackageManager().setComponentEnabledSetting(new ComponentName(getPackageName(), WatchDogService.class.getName()),
@@ -140,7 +140,7 @@ public abstract class AbsWorkService extends Service {
          */
         @Override
         public int onStartCommand(Intent intent, int flags, int startId) {
-            startForeground(AbsWorkService.HASH_CODE, new Notification());
+//            startForeground(AbsWorkService.HASH_CODE, new Notification());
             stopSelf();
             return START_STICKY;
         }

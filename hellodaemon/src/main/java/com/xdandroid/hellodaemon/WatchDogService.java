@@ -38,7 +38,7 @@ public class WatchDogService extends Service {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
                 DaemonEnv.startServiceSafely(new Intent(DaemonEnv.sApp, WatchDogNotificationService.class));
             } else {
-                startForeground(HASH_CODE, new Notification());
+//                startForeground(HASH_CODE, new Notification());
             }
         }
 
@@ -143,7 +143,7 @@ public class WatchDogService extends Service {
          */
         @Override
         public int onStartCommand(Intent intent, int flags, int startId) {
-            startForeground(WatchDogService.HASH_CODE, new Notification());
+//            startForeground(WatchDogService.HASH_CODE, new Notification());
             stopSelf();
             return START_STICKY;
         }
